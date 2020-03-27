@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_marginLeft="5dp"
     android:layout_marginRight="5dp"
     android:layout_marginTop="3dp"
@@ -18,11 +19,14 @@
 
         <ImageView
             android:id="@+id/iv_item_delete"
+            android:layout_alignParentRight="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@mipmap/cha" />
 
         <ImageView
+            android:visibility="gone"
+            tools:visibility="gone"
             android:id="@+id/iv_item_up"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -30,6 +34,8 @@
             android:src="@mipmap/jt_up" />
 
         <ImageView
+            android:visibility="gone"
+            tools:visibility="visible"
             android:id="@+id/iv_item_down"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -68,4 +74,6 @@
                 android:textColor="#1e1e1e" />
         </LinearLayout>
     </RelativeLayout>
+
+    <include layout="@layout/view_add_footer" />
 </LinearLayout>

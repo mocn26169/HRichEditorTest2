@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,7 +41,9 @@ public class RichEditorAdapter extends RecyclerView.Adapter<RichEditorAdapter.My
     private int curClickItemIndex = 0;//当前点击的item
     private OnDownUpChangeListener onDownUpChangeListener;
     private OnChoiseVideoListener onChoiseVideoListener;
+    private OnActivityListener onActivityListener;
     private OnItemClickListener onItemClickListener;
+
 
 
     public RichEditorAdapter(Activity context, List<EContent> datas) {
@@ -55,17 +58,33 @@ public class RichEditorAdapter extends RecyclerView.Adapter<RichEditorAdapter.My
 
     @Override
     public void onBindViewHolder(final MyViewHolder holder, final int position) {
+        Log.i("TAG","onBindViewHolder");
         final EContent eContent = datas.get(position);
-        /**
-         * 隐藏第一个item的上箭头和最后一个item的下箭头
-         */
-        if (position == 0) {
-            holder.ivUp.setVisibility(View.GONE);
-        } else if (position == datas.size() - 1) {
-            holder.ivDown.setVisibility(View.GONE);
+//        /**
+//         * 隐藏第一个item的上箭头和最后一个item的下箭头
+//         */
+//        if (position == 0) {
+////            holder.ivUp.setVisibility(View.GONE);
+//            holder.layout_footer.setVisibility(View.GONE);
+//        } else if (position == datas.size() - 1) {
+////            holder.ivDown.setVisibility(View.GONE);
+//            holder.layout_footer.setVisibility(View.VISIBLE);
+//        }
+
+//        if (position == datas.size() - 1) {
+//            holder.layout_footer.setVisibility(View.VISIBLE);
+//        } else {
+//            holder.layout_footer.setVisibility(View.GONE);
+//        }//
+//
+        if (eContent.isHiddenAddImage()) {
+            holder.ivAddItem.setVisibility(View.GONE);
+        } else {
+            holder.ivAddItem.setVisibility(View.VISIBLE);
         }
+
         //设置内容
-        holder.tvDesc.setText(TextUtils.isEmpty(eContent.getContent()) ? context.getString(R.string.rich_click_add_txt): eContent.getContent());
+        holder.tvDesc.setText(TextUtils.isEmpty(eContent.getContent()) ? context.getString(R.string.rich_click_add_txt) : eContent.getContent());
         /**
          * 根据类型显示item的图片
          */
@@ -121,7 +140,10 @@ public class RichEditorAdapter extends RecyclerView.Adapter<RichEditorAdapter.My
         holder.ivAddItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showAddItemArea(holder);
+                if (onActivityListener !=null){
+                    onActivityListener.onShowAddPop(v,position);
+                }
+//                showAddItemArea(holder);
             }
         });
         /**
@@ -136,52 +158,53 @@ public class RichEditorAdapter extends RecyclerView.Adapter<RichEditorAdapter.My
                 }
             }
         });
-        holder.ivAddVideo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                hideAddArea(holder);
-                if (onItemClickListener != null) {
-                    onItemClickListener.onClick(ItemType.VIDEO, position);
-                }
-            }
-        });
-        holder.ivAddTxt.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                hideAddArea(holder);
-                if (onItemClickListener != null) {
-                    onItemClickListener.onClick(ItemType.TXT, position);
-                }
-            }
-        });
-        holder.ivAddClose.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                hideAddArea(holder);
-            }
-        });
+//        holder.ivAddVideo.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                hideAddArea(holder);
+//                if (onItemClickListener != null) {
+//                    onItemClickListener.onClick(ItemType.VIDEO, position);
+//                }
+//            }
+//        });
+//        holder.ivAddTxt.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                hideAddArea(holder);
+//                if (onItemClickListener != null) {
+//                    onItemClickListener.onClick(ItemType.TXT, position);
+//                }
+//            }
+//        });
+//        holder.ivAddClose.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                hideAddArea(holder);
+//            }
+//        });
         /**
          * 设置向下向上箭头、删除的单击事件监听
          */
-        holder.ivDown.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(final View v) {
-                onDownUpChangeListener.onDown(v, position);
-
-            }
-        });
-        holder.ivUp.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onDownUpChangeListener.onUp(v, position);
-            }
-        });
+//        holder.ivDown.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(final View v) {
+//                onDownUpChangeListener.onDown(v, position);
+//
+//            }
+//        });
+//        holder.ivUp.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                onDownUpChangeListener.onUp(v, position);
+//            }
+//        });
         holder.ivDrop.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 onDownUpChangeListener.onDrop(v, position);
             }
         });
+
     }
 
     /**
@@ -272,6 +295,10 @@ public class RichEditorAdapter extends RecyclerView.Adapter<RichEditorAdapter.My
         this.onChoiseVideoListener = onChoiseVideoListener;
     }
 
+    public void setOnActivityListener(OnActivityListener onActivityListener) {
+        this.onActivityListener = onActivityListener;
+    }
+
     @Override
     public void onItemMove(RecyclerView.ViewHolder source, RecyclerView.ViewHolder target) {
         int fromPosition = source.getAdapterPosition();
@@ -283,7 +310,7 @@ public class RichEditorAdapter extends RecyclerView.Adapter<RichEditorAdapter.My
             notifyItemMoved(fromPosition, toPosition);
         }
         //移动过程中移除view的放大效果
-        onItemClear(source);
+//        onItemClear(source);
     }
 
     @Override
@@ -293,16 +320,28 @@ public class RichEditorAdapter extends RecyclerView.Adapter<RichEditorAdapter.My
     @Override
     public void onItemSelect(RecyclerView.ViewHolder viewHolder) {
         //当拖拽选中时放大选中的view
-        viewHolder.itemView.setScaleX(1.2f);
-        viewHolder.itemView.setScaleY(1.2f);
+//        viewHolder.itemView.setScaleX(1.0f);
+//        viewHolder.itemView.setScaleY(1.0f);
+        viewHolder.itemView.findViewById(R.id.rl_item).setBackground(context.getResources().getDrawable(R.drawable.shape_item_bg_select));
+      if (onActivityListener !=null){
+          onActivityListener.onHidden();
+      }
+//        viewHolder.itemView.findViewById(R.id.iv_additem_add).setVisibility(View.GONE);
+
+
     }
 
     @Override
     public void onItemClear(RecyclerView.ViewHolder viewHolder) {
         //拖拽结束后恢复view的状态
-        viewHolder.itemView.setScaleX(1.0f);
-        viewHolder.itemView.setScaleY(1.0f);
-
+//        viewHolder.itemView.setScaleX(1.0f);
+//        viewHolder.itemView.setScaleY(1.0f);
+        viewHolder.itemView.findViewById(R.id.rl_item).setBackground(context.getResources().getDrawable(R.drawable.shape_item_bg));
+//        viewHolder.itemView.findViewById(R.id.iv_additem_add).setVisibility(View.VISIBLE);
+        Log.i("TAG","onItemClear");
+        if (onActivityListener !=null){
+            onActivityListener.onShow();
+        }
     }
 
     /**
@@ -327,6 +366,15 @@ public class RichEditorAdapter extends RecyclerView.Adapter<RichEditorAdapter.My
         void onClick(String itemType, int index);
     }
 
+    /**
+     * 隐藏/显示 加号按钮
+     */
+    public interface OnActivityListener {
+        void onHidden();
+        void onShow();
+        void onShowAddPop(View v,int pos);
+    }
+
     @Override
     public int getItemCount() {
         return datas.size();
@@ -349,6 +397,7 @@ public class RichEditorAdapter extends RecyclerView.Adapter<RichEditorAdapter.My
         TextView tvDesc;
         RelativeLayout rvItem;
         LinearLayout rvAddItemArea;
+        LinearLayout layout_footer;
 
         public MyViewHolder(View itemView) {
             super(itemView);
@@ -364,6 +413,7 @@ public class RichEditorAdapter extends RecyclerView.Adapter<RichEditorAdapter.My
             ivDrop = (ImageView) itemView.findViewById(R.id.iv_item_delete);
             tvDesc = (TextView) itemView.findViewById(R.id.tv_item_desc);
             rvAddItemArea = (LinearLayout) itemView.findViewById(R.id.ll_additem_addarea);
+            layout_footer = (LinearLayout) itemView.findViewById(R.id.layout_footer);
         }
     }
 

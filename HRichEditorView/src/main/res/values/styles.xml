@@ -28,4 +28,9 @@
         <item name="android:layout_marginLeft">5dp</item>
         <item name="android:button">@null</item>
     </style>
+
+    <style name="popuwindow_middle_style">
+        <item name="android:windowEnterAnimation">@anim/popu_middle_in</item>
+        <item name="android:windowExitAnimation">@anim/popu_middle_out</item>
+    </style>
 </resources>

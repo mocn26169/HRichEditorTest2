@@ -15,15 +15,10 @@ import com.huangdali.bean.EContent;
 import com.huangdali.bean.ItemType;
 import com.huangdali.utils.ImageCompereUtils;
 import com.huangdali.utils.ImageScaleUtils;
-import com.huangdali.view.HRichEditorView;
+import com.huangdali.view.HRichEditorActivity;
 
-import java.io.File;
 import java.util.List;
 
-import cn.bmob.v3.Bmob;
-import cn.bmob.v3.datatype.BmobFile;
-import cn.bmob.v3.exception.BmobException;
-import cn.bmob.v3.listener.UploadFileListener;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -43,14 +38,16 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Bmob.initialize(this, "d74918828662b3d50485e6ef1f8b5e9f");
+//        Bmob.initialize(this, "d74918828662b3d50485e6ef1f8b5e9f");
 
         Log.e("MainActivity", "onCreate(MainActivity.java:16)");
         requestPermission();
+        startActivityForResult(new Intent(this, HRichEditorActivity.class), REQUEST_CODE_EDIT);
+
     }
 
     public void onStart(View view) {
-        startActivityForResult(new Intent(this, HRichEditorView.class), REQUEST_CODE_EDIT);
+        startActivityForResult(new Intent(this, HRichEditorActivity.class), REQUEST_CODE_EDIT);
     }
 
     /**
@@ -132,18 +129,18 @@ public class MainActivity extends AppCompatActivity {
         Log.d(TAG, "filePath: " + filePath);
         //具体的文件上传逻辑
 
-        final BmobFile file = new BmobFile(new File(filePath));
-        if (file != null) {
-            file.upload(new UploadFileListener() {
-                @Override
-                public void done(BmobException e) {
-                    String uploadResult;//用于记录文件上传之后的路径（建议使用相对路径，最好不好写死域名，拼接html的时候再加域名，避免域名更改导致更换麻烦的问题）
-                    uploadResult = file.getFileUrl();
-                    content.setUrl(uploadResult);//反设置图片、视频的url（将URI转换为服务器中存放的地址）
-                    Log.d(TAG, "uploadResult: " + uploadResult);
-                }
-            });
-        }
+//        final BmobFile file = new BmobFile(new File(filePath));
+//        if (file != null) {
+//            file.upload(new UploadFileListener() {
+//                @Override
+//                public void done(BmobException e) {
+//                    String uploadResult;//用于记录文件上传之后的路径（建议使用相对路径，最好不好写死域名，拼接html的时候再加域名，避免域名更改导致更换麻烦的问题）
+//                    uploadResult = file.getFileUrl();
+//                    content.setUrl(uploadResult);//反设置图片、视频的url（将URI转换为服务器中存放的地址）
+//                    Log.d(TAG, "uploadResult: " + uploadResult);
+//                }
+//            });
+//        }
 
         //模拟上传到服务器的地址
         //uploadResult = "/upload/15519099928/IMG_" + System.currentTimeMillis() + "." + filePath.substring(filePath.lastIndexOf(".") + 1);
@@ -155,18 +152,18 @@ public class MainActivity extends AppCompatActivity {
         Log.d(TAG, "filePath: " + filePath);
         //具体的文件上传逻辑
 
-        final BmobFile file = new BmobFile(new File(filePath));
-        if (file != null) {
-            file.upload(new UploadFileListener() {
-                @Override
-                public void done(BmobException e) {
-                    String uploadResult;//用于记录文件上传之后的路径（建议使用相对路径，最好不好写死域名，拼接html的时候再加域名，避免域名更改导致更换麻烦的问题）
-                    uploadResult = file.getFileUrl();
-                    setCoverUri("<img style='width:100%;display: inline-block;' src=" + uploadResult + " /><br/>");
-                    Log.d(TAG, "uploadResult: " + uploadResult);
-                }
-            });
-        }
+//        final BmobFile file = new BmobFile(new File(filePath));
+//        if (file != null) {
+//            file.upload(new UploadFileListener() {
+//                @Override
+//                public void done(BmobException e) {
+//                    String uploadResult;//用于记录文件上传之后的路径（建议使用相对路径，最好不好写死域名，拼接html的时候再加域名，避免域名更改导致更换麻烦的问题）
+//                    uploadResult = file.getFileUrl();
+//                    setCoverUri("<img style='width:100%;display: inline-block;' src=" + uploadResult + " /><br/>");
+//                    Log.d(TAG, "uploadResult: " + uploadResult);
+//                }
+//            });
+//        }
 
         //模拟上传到服务器的地址
         //uploadResult = "/upload/15519099928/IMG_" + System.currentTimeMillis() + "." + filePath.substring(filePath.lastIndexOf(".") + 1);

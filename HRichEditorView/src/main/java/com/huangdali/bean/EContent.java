@@ -14,6 +14,7 @@ public class EContent implements Serializable {
     private String content;
     private String style;
     private String type;
+    private boolean hiddenAddImage;
 
     public EContent() {
     }
@@ -62,6 +63,13 @@ public class EContent implements Serializable {
         this.style = style;
     }
 
+    public boolean isHiddenAddImage() {
+        return hiddenAddImage;
+    }
+
+    public void setHiddenAddImage(boolean hiddenAddImage) {
+        this.hiddenAddImage = hiddenAddImage;
+    }
 
     @Override
     public String toString() {

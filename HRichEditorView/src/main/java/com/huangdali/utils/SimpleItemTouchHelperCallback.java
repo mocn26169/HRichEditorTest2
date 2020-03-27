@@ -2,6 +2,7 @@ package com.huangdali.utils;
 
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
+import android.util.Log;
 
 import com.huangdali.bean.RichEditorAdapter;
 
@@ -22,7 +23,8 @@ public class SimpleItemTouchHelperCallback extends ItemTouchHelper.Callback {
     @Override
     public int getMovementFlags(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder) {
 
-        int dragFlags = ItemTouchHelper.UP | ItemTouchHelper.DOWN | ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT; //允许上下左右的拖动
+//        int dragFlags = ItemTouchHelper.UP | ItemTouchHelper.DOWN | ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT; //允许上下左右的拖动
+        int dragFlags = ItemTouchHelper.UP | ItemTouchHelper.DOWN ; //允许上下的拖动
         return makeMovementFlags(dragFlags, 0);
     }
 
@@ -52,6 +54,7 @@ public class SimpleItemTouchHelperCallback extends ItemTouchHelper.Callback {
     @Override
     public void onSelectedChanged(RecyclerView.ViewHolder viewHolder, int actionState) {
         super.onSelectedChanged(viewHolder, actionState);
+
         if (actionState != ItemTouchHelper.ACTION_STATE_IDLE) {
             //当滑动或者拖拽view的时候通过接口返回该ViewHolder
             mAdapter.onItemSelect(viewHolder);

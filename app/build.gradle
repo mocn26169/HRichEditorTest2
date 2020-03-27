@@ -4,7 +4,7 @@ android {
     compileSdkVersion 28
     defaultConfig {
         applicationId "com.android.dcxiaolou.hrichedittest"
-        minSdkVersion 15
+        minSdkVersion 16
         targetSdkVersion 28
         versionCode 1
         versionName "1.0"
@@ -28,8 +28,8 @@ dependencies {
     //添加module HRichEditorView
     implementation project(path: ':HRichEditorView')
 
-    implementation 'cn.bmob.android:bmob-sdk:3.6.6'
-    implementation 'cn.bmob.android:http-legacy:1.0'
+//    implementation 'cn.bmob.android:bmob-sdk:3.6.6'
+//    implementation 'cn.bmob.android:http-legacy:1.0'
     // 去除bmob-sdk中包含的常用库，如okhttp、glide
     implementation('com.squareup.retrofit2:retrofit:2.1.0') {
         exclude group: 'com.squareup.okhttp3'

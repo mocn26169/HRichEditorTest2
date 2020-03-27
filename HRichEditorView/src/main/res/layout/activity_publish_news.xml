@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+android:id="@+id/rootView"
+    android:orientation="vertical">
+
+    <include layout="@layout/mcc_public_title" />
+
+    <LinearLayout
+        android:id="@+id/ll_additem_addarea"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:background="@drawable/shape_change_bg"
+        android:orientation="horizontal"
+        android:visibility="gone">
+
+        <ImageView
+            android:id="@+id/iv_additem_txt"
+            style="@style/additem"
+            android:src="@mipmap/txt" />
+
+        <ImageView
+            android:id="@+id/iv_additem_img"
+            style="@style/additem"
+            android:src="@mipmap/img" />
+
+        <ImageView
+            android:id="@+id/iv_additem_video"
+            style="@style/additem"
+            android:src="@mipmap/video" />
+
+        <ImageView
+            android:id="@+id/iv_additem_close"
+            style="@style/additem"
+            android:src="@mipmap/close" />
+
+    </LinearLayout>
+
+    <com.huangdali.view.CustomScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#f2f0f0"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
+                android:background="#CD8162"></TextView>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:descendantFocusability="blocksDescendants">
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/rv_itemlist"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp" />
+            </RelativeLayout>
+
+            <LinearLayout
+                android:id="@+id/layout_footer"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:layout_marginBottom="3dp"
+                android:orientation="vertical"
+                android:visibility="visible"
+                tools:visibility="visible">
+
+                <ImageView
+                    android:id="@+id/iv_additem_foot"
+                    style="@style/additem"
+                    android:layout_gravity="center"
+                    android:src="@mipmap/add" />
+
+                <LinearLayout
+                    android:id="@+id/layout_bottom_pop"
+                    android:layout_width="160dp"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@mipmap/writing_icon_bg"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:paddingLeft="10dp"
+                    android:paddingTop="12dp"
+                    android:paddingRight="10dp"
+                    android:paddingBottom="12dp">
+
+                    <LinearLayout
+                        android:id="@+id/layout_addImage"
+                        android:layout_width="100dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="26dp"
+                            android:layout_height="26dp"
+                            android:background="@mipmap/writing_icon_pic">
+
+                        </ImageView>
+
+                        <TextView
+
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:text="图片"
+                            android:textColor="#000000"
+                            android:textSize="16sp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/layout_addWord"
+
+                        android:layout_width="100dp"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="26dp"
+                            android:layout_height="26dp"
+                            android:background="@mipmap/writing_icon_word">
+
+                        </ImageView>
+
+                        <TextView
+
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:text="文本"
+                            android:textColor="#000000"
+                            android:textSize="16sp" />
+                    </LinearLayout>
+
+
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </com.huangdali.view.CustomScrollView>
+</LinearLayout>
